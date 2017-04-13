@@ -2,7 +2,7 @@
  * @preserve
  * Project: Bootstrap Hover Dropdown
  * Author: Cameron Spear
- * Version: v2.2.1
+ * Version: v2.2.2
  * Contributors: Mattia Larentis
  * Dependencies: Bootstrap's Dropdown plugin, jQuery
  * Description: A simple plugin to enable Bootstrap dropdowns to active on hover and provide a nice user experience.
@@ -47,7 +47,7 @@
 
             $parent.hover(function (event) {
                 // so a neighbor can't open the dropdown
-                if(!$parent.hasClass('open') && !$this.is(event.target)) {
+                if(!$parent.hasClass('show') && !$this.is(event.target)) {
                     // stop this event, stop executing any code
                     // in this callback but continue to propagate
                     return true;
@@ -59,7 +59,7 @@
                 window.clearTimeout(timeoutHover)
                 timeout = window.setTimeout(function () {
                     $this.attr('aria-expanded', 'false');
-                    $parent.removeClass('open');
+                    $parent.removeClass('show');
                     $this.trigger(hideEvent);
                 }, settings.delay);
             });
@@ -68,7 +68,7 @@
             $this.hover(function (event) {
                 // this helps prevent a double event from firing.
                 // see https://github.com/CWSpear/bootstrap-hover-dropdown/issues/55
-                if(!$parent.hasClass('open') && !$parent.is(event.target)) {
+                if(!$parent.hasClass('show') && !$parent.is(event.target)) {
                     // stop this event, stop executing any code
                     // in this callback but continue to propagate
                     return true;
@@ -105,18 +105,18 @@
                 window.clearTimeout(timeout);
                 // restart hover timer
                 window.clearTimeout(timeoutHover);
-                
-                // delay for hover event.  
+
+                // delay for hover event.
                 timeoutHover = window.setTimeout(function () {
                     $allDropdowns.find(':focus').blur();
 
                     if(settings.instantlyCloseOthers === true)
-                        $allDropdowns.removeClass('open');
-                    
+                        $allDropdowns.removeClass('show');
+
                     // clear timer for hover event
                     window.clearTimeout(timeoutHover);
                     $this.attr('aria-expanded', 'true');
-                    $parent.addClass('open');
+                    $parent.addClass('show');
                     $this.trigger(showEvent);
                 }, settings.hoverDelay);
             }
